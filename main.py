@@ -12,7 +12,7 @@ def new_day():
     hr = datetime.datetime.now().hour
     min = datetime.datetime.now().minute
     if str(hr) == "18" and str(min) == "30":
-        True
+        return True
 
 app = Client(":CLIENT:", API_ID, API_HASH, BOT_TOKEN)
 
@@ -28,7 +28,7 @@ async def cwf(_, m):
     count += 1
     await update(chat_id, user_id, count)
     await global_update(chat_id, user_id, count)
-    while new_day():
+    if new_day():
         await reset()
 
 @app.on_message(filters.command("profile", ["/", "!", "?", "."]))
