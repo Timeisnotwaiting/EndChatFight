@@ -47,4 +47,10 @@ async def reset():
             await mongodb.update_one({"chat_id": chat, "user_id": user, "count": 0}, upsert=True)
     
 async def get_rank(chat_id: int, user_id: int):
-    
+    IDS, COUNTS = await get_stats(chat_id)
+    ind = IDS.index(user_id)
+    user_count = COUNTS[ind]
+    COUNTS.sort()
+    COUNTS.reverse()
+    user_rank = int(COUNTS.index(user_count)) + 1
+    return user_rank
