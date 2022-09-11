@@ -41,6 +41,5 @@ async def profile(_, m):
     user_id = m.from_user.id
     count = await get_det(chat_id, user_id)
     global_count = await get_global_profile(chat_id, user_id)
-    
-    
+    today_rank = await get_rank(chat_id, user_id)
     
