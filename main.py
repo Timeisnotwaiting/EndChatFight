@@ -45,4 +45,8 @@ async def profile(_, m):
     global_rank = await get_global_rank(chat_id, user_id)
     title = m.chat.title
     return await m.reply(_PROFILE.format(title, count, today_rank, global_count, global_rank))
+
+@app.on_message(filters.command(["rankings", "ranking", "stats"], ["/", "?", "!", "."]))
+async def stats(_, m):
+    IDS, COUNTS = await get_stats(m.chat.id)
     
