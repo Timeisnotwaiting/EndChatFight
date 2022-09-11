@@ -9,6 +9,12 @@ globaldb = db.global
 async def global_update(chat_id: int, user_id: int, count: int):
     await globaldb.update_one({"chat_id": chat_id, "user_id": user_id, "count": count}, upsert=True)
 
+async def get_global_profile(chat_id: int, user_id: int):
+    stat = globaldb.find_one({"chat_id": chat_id, "user_id": user_id})
+    if not stat:
+        return 
+    return int(stat["count"])
+
 async def update(chat_id: int, user_id: int, count: int):
     await mongodb.update_one({"chat_id": chat_id, "user_id": user_id, "count": count}, upsert=True)
 
@@ -16,7 +22,7 @@ async def get_det(chat_id: int, user_id: int):
     stat = mongodb.find_one({"chat_id": chat_id, "user_id": user_id})
     if not stat:
         return 
-    return stat["count"]
+    return int(stat["count"])
 
 async def get_stats(chat_id: int):
     stats = mongodb.find_one({"chat_id": chat_id})
@@ -39,4 +45,6 @@ async def reset():
     for chat in chats:
         for user in users:
             await mongodb.update_one({"chat_id": chat, "user_id": user, "count": 0}, upsert=True)
+    
+async def get_rank(chat_id: int, user_id: int):
     
