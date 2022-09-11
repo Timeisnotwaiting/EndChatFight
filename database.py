@@ -19,7 +19,7 @@ async def get_stats(chat_id: int):
         return
     IDS = []
     COUNTS = []
-    async for c in stats:
+    for c in stats:
         IDS.append(c["user_id"])
         COUNTS.append(c["count"])
     return IDS, COUNTS
@@ -33,5 +33,5 @@ async def reset():
         users.append(i["user_id"])
     for chat in chats:
         for user in users:
-            await mongodb.update_one({"chat_id": chat, "user_id": user, "count": 0})
+            await mongodb.update_one({"chat_id": chat, "user_id": user, "count": 0}, upsert=True)
     
