@@ -15,6 +15,17 @@ async def get_global_profile(chat_id: int, user_id: int):
         return 
     return int(stat["count"])
 
+async def get_global_stats(chat_id: int):
+    stats = globaldb.find_one({"chat_id": chat_id})
+    if not stats:
+        return
+    IDS = []
+    COUNTS = []
+    for c in stats:
+        IDS.append(c["user_id"])
+        COUNTS.append(c["count"])
+    return IDS, COUNTS
+
 async def update(chat_id: int, user_id: int, count: int):
     await mongodb.update_one({"chat_id": chat_id, "user_id": user_id, "count": count}, upsert=True)
 
@@ -48,6 +59,15 @@ async def reset():
     
 async def get_rank(chat_id: int, user_id: int):
     IDS, COUNTS = await get_stats(chat_id)
+    ind = IDS.index(user_id)
+    user_count = COUNTS[ind]
+    COUNTS.sort()
+    COUNTS.reverse()
+    user_rank = int(COUNTS.index(user_count)) + 1
+    return user_rank
+
+async def get_global_rank(chat_id: int, user_id: int):
+    IDS, COUNTS = await get_global_stats(chat_id)
     ind = IDS.index(user_id)
     user_count = COUNTS[ind]
     COUNTS.sort()
