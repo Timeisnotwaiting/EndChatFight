@@ -24,3 +24,14 @@ async def get_stats(chat_id: int):
         COUNTS.append(c["count"])
     return IDS, COUNTS
     
+async def reset():
+    get_all = mongodb.find({"chat_id": {"$lt": 0}, "user_id": {"$gt": 0}})
+    chats = []
+    users = []
+    for i in await get_all.to_list(length=1000000000):
+        chats.append(i["chat_id"])
+        users.append(i["user_id"])
+    for chat in chats:
+        for user in users:
+            await mongodb.update_one({"chat_id": chat, "user_id": user, "count": 0})
+    
