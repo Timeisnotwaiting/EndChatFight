@@ -44,4 +44,5 @@ async def profile(_, m):
     today_rank = await get_rank(chat_id, user_id)
     global_rank = await get_global_rank(chat_id, user_id)
     title = m.chat.title
+    return await m.reply(_PROFILE.format(title, count, today_rank, global_count, global_rank))
     
