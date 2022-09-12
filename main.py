@@ -6,7 +6,7 @@ from database import *
 
 _PROFILE = "{}\n\n•Messages sent today : {}\n•Rank Today : {}\n\n•Overall Messages : {}\n•Overall Rank : {}"
 
-API_ID = os.getenv("API_ID", None)
+API_ID = int(os.getenv("API_ID", None))
 API_HASH = os.getenv("API_HASH", None)
 BOT_TOKEN = os.getenv("BOT_TOKEN", None)
 
