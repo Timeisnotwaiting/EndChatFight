@@ -53,7 +53,7 @@ async def stats(_, m):
     IDS, COUNTS = await get_stats(m.chat.id)
  
 try:  
-    @app.start()
+    app.start()
     print("Bot started....")
     idle()
 except Exception as e:
