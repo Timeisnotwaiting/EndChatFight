@@ -4,7 +4,7 @@ db = mongo_build()
 
 mongodb = db.mongo
 
-globaldb = db.global
+globaldb = db.Global
 
 async def global_update(chat_id: int, user_id: int, count: int):
     await globaldb.update_one({"chat_id": chat_id, "user_id": user_id, "count": count}, upsert=True)
