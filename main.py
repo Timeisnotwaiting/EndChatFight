@@ -1,4 +1,4 @@
-from pyrogram import Client, filters
+from pyrogram import Client, filters, idle
 from pyrogram.types import Message
 import os
 import datetime
@@ -51,4 +51,10 @@ async def profile(_, m):
 @app.on_message(filters.command(["rankings", "ranking", "stats"], ["/", "?", "!", "."]))
 async def stats(_, m):
     IDS, COUNTS = await get_stats(m.chat.id)
-    
+ 
+try:  
+    @app.start()
+    print("Bot started....")
+    idle()
+except Exception as e:
+    print(e)
